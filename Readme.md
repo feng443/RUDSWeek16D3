@@ -13,6 +13,11 @@ Instead of using Excel, I prefer to use Jupyter Notebook, which is self-document
 
 [data_prep.ipynb](data_prep.ipynb)
 
+Running the notebook creates the data file needed for next step at:
+
+[Skeleton/assets/csv/state_poverty_vs_healthcare_2014.csv](Skeleton/assets/csv/state_poverty_vs_healthcare_2014.csv)
+
+
 #### 3. Visualize the Data
 
 ```bash
