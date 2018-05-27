@@ -4,3 +4,8 @@
 
  .chart {
  }
+
+.state-abbr {
+    font: bold 10px arial;
+    fill: white;
+}
