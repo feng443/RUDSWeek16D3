@@ -1,5 +1,9 @@
 # Unit 16 | Assignment - Data Journalism and D3
 
+To see the interactive chart in action, please see:
+
+http://github.chanfeng.com/RUDSWeek16D3/Skeleton/
+
 ### Level 1: D3 Dabbler
 
 #### 1. Find the Data
