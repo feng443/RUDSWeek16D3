@@ -72,17 +72,6 @@ function makeResponsive() {
     var chartGroup = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-    // Add Risk/Fact Lable to make it easier to follow the chart
-    svg.append('text')
-        .attr('transform', `translate(20, ${margin.top + 20})`)
-        .classed('risk-label', true)
-        .text('Risk')
-
-    svg.append('text')
-        .attr('transform', `translate(${width}, ${svgHeight - margin.bottom/2 + 10})`)
-        .classed('fact-label', true)
-        .text('Fact')
-
     redraw()
 
     function addTitle() {
