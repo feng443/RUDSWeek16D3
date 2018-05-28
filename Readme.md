@@ -6,7 +6,7 @@ http://github.chanfeng.com/RUDSWeek16D3/Skeleton/
 
 #### 1. Find the Data
 
-All files are saved under [CVS](CSV/) directory. 
+All files are saved under [CSV](CSV/) directory. 
 
 #### 2. Format and Test the Data
 
