@@ -2,12 +2,27 @@
  * =========
  * Add styling to your d3 chart with this file. */
 
- .chart {
- }
-
 .state-abbr {
     font: bold 10px arial;
     fill: white;
+}
+
+.xlabel, .ylabel, .risk-label, .fact-label, .title {
+    text-anchor: middle;
+    font-size: 16px;
+    font-family: arial;
+}
+
+.xlabel, .ylabel {
+    font-size: 16px;
+}
+
+.fact-label, .risk-label, .title {}
+    font-size: 20px;
+}
+
+.title {
+   font-weight: bold;
 }
 
 .tooltip {

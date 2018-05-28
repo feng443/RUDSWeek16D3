@@ -21,10 +21,17 @@ var DATA // Buffer the data for redraw
 var FACT = Object.keys(FACTS)[0]
 var RISK = Object.keys(RISKS)[0]
 
+// Reuse for animation
+var circleGroup
+var xScale
+var yScale
+var xAxis
+var yAxis
+
 d3.select(window).on('resize', makeResponsive)
 
 // Use this techinique to avoid reloading of data
-d3.csv('assets/csv/state_poverty_vs_healthcare_2014.csv', function(err, data) {
+d3.csv('assets/csv/ACS_vs_BRFSS_2014.csv', function(err, data) {
     if (err) throw err
     // Convert to numeric
     data.forEach( d => {
@@ -65,13 +72,12 @@ function makeResponsive() {
     // Add Risk/Fact Lable to make it easier to follow the chart
     svg.append('text')
         .attr('transform', `translate(20, ${margin.top + 20})`)
-        .attr('font-size', '20px')
+        .classed('risk-label', true)
         .text('Risk')
 
     svg.append('text')
         .attr('transform', `translate(${width}, ${svgHeight - margin.bottom/2 + 10})`)
-        .attr('text-anchor', 'right')
-        .attr('font-size', '20px')
+        .classed('fact-label', true)
         .text('Fact')
 
     redraw()
@@ -93,12 +99,8 @@ function makeResponsive() {
           chartGroup.append('text')
             .classed('xlabel', true)
             .attr('transform', `translate(${width/2}, ${height + margin.top/2 + h})`)
-            .attr('text-anchor', 'middle')
-            .attr('font-size', '16px')
-            .attr('fill', function() {
-                if (FACT == fact) return 'black'
-                else return 'gray'
-             })
+            .attr('font-weight', function() { if (FACT == fact) return 'black'; else return 'gray'; })
+            .attr('fill', function() { if (FACT == fact) return 'black'; else return 'gray'; })
             .text(label)
             .on('click', function() {
                 FACT = fact
@@ -115,12 +117,8 @@ function makeResponsive() {
           svg.append('text')
             .classed('ylabel', true)
             .attr('transform', `translate(${margin.left / 2 + w}, ${height/2 + 20}) rotate(-90)`)
-            .attr('text-anchor', 'middle')
-            .attr('font-size', '16px')
-            .attr('fill', function() {
-                if (RISK == risk) return 'black'
-                else return 'gray'
-             })
+            .attr('font-weight', function() { if (RISK == risk) return 'black'; else return 'gray'; })
+            .attr('fill', function() { if (RISK == risk) return 'black'; else return 'gray'; })
             .text(label)
             .on('click', function() {
                 RISK = risk
@@ -134,13 +132,12 @@ function makeResponsive() {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    function drawDataPoints(xScale, yScale) {
-        svg.selectAll('circle').remove() // TODO: Change to animation instead
-            var circleGroup = chartGroup.selectAll()
+    function drawDataPoints() {
+       if (circleGroup == null) {
+            circleGroup = chartGroup.selectAll()
                 .data(DATA)
                 .enter()
                 .append('g')
-                .attr('transform', d => `translate(${xScale(d[FACT]) }, ${yScale(d[RISK]) })`)
 
             circleGroup.append('circle')
                 .attr('r', '10')
@@ -151,53 +148,64 @@ function makeResponsive() {
                 .classed('state-abbr', true)
                 .attr('x', -7)
                 .attr('y', 3)
+        }
 
-            var tip = d3.tip()
-                .attr('class', 'tooltip')
-                .style('opacity', 0.5)
-                .html( d => {
-                    let fact_val = d[FACT]
-                    let risk_val = d[RISK]
-                    return `${d.state}<br>${ucFirst(FACT)}: ${fact_val}%<br>${ucFirst(RISK)}: ${risk_val}%`
-                 } ).hide()
+       circleGroup
+            .transition()
+            .duration(1000)
+           .attr('transform', d => `translate(${xScale(d[FACT]) }, ${yScale(d[RISK]) })`)
 
-            circleGroup.call(tip)
+         var tip = d3.tip()
+            .attr('class', 'tooltip')
+            .style('opacity', 0.5)
+            .html( d => {
+                let fact_val = d[FACT]
+                let risk_val = d[RISK]
+                return `${d.state}<br>${ucFirst(FACT)}: ${fact_val}%<br>${ucFirst(RISK)}: ${risk_val}%`
+             } ).hide()
 
-            circleGroup
-                .on('mouseover', d => tip.show(d))
-                .on('mouseout', d => tip.hide())
-    }
+        circleGroup.call(tip)
 
-    function addToolTips(xScale, yScale) {
-        console.log('add tool tips')
+        circleGroup
+             .on('mouseover', d => tip.show(d))
+            .on('mouseout', d => tip.hide())
     }
 
     function redraw() {
-            addTitle()
-            addXLabel()
-            addYLabel()
+        addTitle()
+        addXLabel()
+        addYLabel()
 
-            // X Axis
-            svg.selectAll('.xaxis').remove()
+        // X Axis
+        if (xAxis == null) {
             xScale = d3.scaleLinear()
-                    .domain(d3.extent(DATA, d => d[FACT]))
-                    .range([0, width])
+                .domain(d3.extent(DATA, d => d[FACT]))
+                .range([0, width])
 
-            chartGroup.append('g')
+            xAxis = chartGroup.append('g')
                 .classed('xaxis', true)
                 .attr('transform', `translate(0, ${height})`)
                 .call(d3.axisBottom(xScale))
+        } else {
+            xScale.domain(d3.extent(DATA, d => d[FACT]))
+            xAxis.transition().duration(1000).call(d3.axisBottom(xScale))
+        }
 
-            // Y Axis
-            svg.selectAll('.yaxis').remove()
+        // Y Axis
+        if (yAxis == null ) {
             yScale = d3.scaleLinear()
                 .domain(d3.extent(DATA, d => d[RISK]))
                 .range([height, 0])
-            chartGroup.append('g')
+
+            yAxis = chartGroup.append('g')
                 .classed('yaxis', true)
                 .call(d3.axisLeft(yScale))
+            //drawDataPoints(xScale, yScale)
+        } else {
+            yScale.domain(d3.extent(DATA, d => d[RISK]))
+            yAxis.transition().duration(1000).call(d3.axisLeft(yScale))
+        }
 
-            drawDataPoints(xScale, yScale)
-            addToolTips(xScale, yScale)
+        drawDataPoints()
     }
 } // END
