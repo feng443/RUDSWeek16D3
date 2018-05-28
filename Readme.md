@@ -22,8 +22,8 @@ Running the notebook creates the data file needed for next step at:
 
 #### 3. Visualize the Data
 
-- Most logic is in [Skeleton\assets\js\app.js](Skeleton\assets\js\app.js]).  
-- Shared and static appreance control in [Skeleton\assets\css\d3Style.css](Skeleton\assets\css/d2Style.css)
+- Most logic is in [Skeleton/assets/js/app.js](Skeleton/assets/js/app.js)
+- Shared and static appreance control in [Skeleton/assets/css/d3Style.css](Skeleton/assets/css/d3Style.css)
 
 http://github.chanfeng.com/RUDSWeek16D3/Skeleton/
 
