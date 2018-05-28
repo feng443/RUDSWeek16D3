@@ -4,8 +4,6 @@ To see this assignment in action click on URL below:
 
 http://github.chanfeng.com/RUDSWeek16D3/Skeleton/
 
-### Level 1: D3 Dabbler
-
 #### 1. Find the Data
 
 All files are saved under [CVS](CSV/) directory. 
