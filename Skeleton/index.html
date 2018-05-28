@@ -1,60 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>D3Times</title>
-	<link rel="stylesheet" href="assets/css/style.css">
-	<!-- Latest compiled and minified CSS & JS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.3/d3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+    <meta charset="UTF-8">
+    <title>D3Times</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-md-12 col-md-offset-0">
-				<h1>D3Times</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12  col-md-9 col-md-offset-0">
-				<div class="iframeContainer">
-					<!-- Students: Add a responsive iframe here that includes the d3.html file -->
-						<iframe width='100%' height=500 src="d3.html" allowfullscreen= '' frameborder="0"></iframe>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12  col-md-9 col-md-offset-0">
-				<div class="article">
-					<!-- Students: Replace with your analysis of the data -->
-					<p>There are some interesting findings: </p>
-					<ul>
-						<li>Texas has highest percentage of people lacking healthcare, yet it does not have highest poverty ratio.</li>
-						<li>Massachusetts has lowest percentage of pople lacking healthcare and some other factor such as statewide mandartory insurance is playing here.</li>
-						<li>New Hampshire has lowest poverty ratio, but it stands middle in term of % lacking healthcare.</li>
-					</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-md-offset-0">
+            <h1>D3Times</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12  col-md-9 col-md-offset-0">
+            <div class="iframeContainer">
+                <!-- Students: Add a responsive iframe here that includes the d3.html file -->
+                <iframe width='100%' height=500 src="d3.html" allowfullscreen='' frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12  col-md-9 col-md-offset-0">
+            <div class="article">
+                <!-- Students: Replace with your analysis of the data -->
+                <p>There are some interesting findings: </p>
+                <ul>
+                    <li>Texas has highest percentage of people lacking healthcare, yet it does not have highest poverty
+                        ratio.
+                    </li>
+                    <li>Massachusetts has lowest percentage of pople lacking healthcare and some other factor such as
+                        statewide mandartory insurance is playing here.
+                    </li>
+                    <li>New Hampshire has lowest poverty ratio, but it stands middle in term of % lacking healthcare.
+                    </li>
+                </ul>
 
-					Strong correlation found between:
-					<ul>
-						<li>Poverty level vs lack of healthcare (positive)</li>
-						<li>Median Age vs Smoker Percentage (positive) </li>
-						<li>Income vs Somker Percentage (negative)</li>
-						<li>Income vs Obese (negative)</li>
-					</ul>
+                Strong correlation found between:
+                <ul>
+                    <li>Poverty level vs lack of healthcare (positive)</li>
+                    <li>Median Age vs Smoker Percentage (positive)</li>
+                    <li>Income vs Somker Percentage (negative)</li>
+                    <li>Income vs Obese (negative)</li>
+                </ul>
 
-					<strong>Note: Pureto Rico was excluded from this visualization. If you prefer to see Purto Rico, please make your request.</strong>
-				</div>
-			</div>
-		</div>
-	</div>
+                <strong>Note: Pureto Rico was excluded from this visualization. If you prefer to see Purto Rico, please
+                    make your request.</strong>
+            </div>
+        </div>
+    </div>
+</div>
 
-		<!-- Footer-->
-	<div id="footer">
-		<p>&copy; Chan Feng 2018</p>
+<!-- Footer-->
+<div id="footer">
+    <p>&copy; Chan Feng 2018</p>
 
-	</div>
+</div>
 
 </body>
 </html>

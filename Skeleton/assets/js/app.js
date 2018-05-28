@@ -30,7 +30,7 @@ var yAxis
 
 d3.select(window).on('resize', makeResponsive)
 
-// Use this techinique to avoid reloading of data
+// Data only need to be loaded once
 d3.csv('assets/csv/ACS_vs_BRFSS_2014.csv', function(err, data) {
     if (err) throw err
     // Convert to numeric
@@ -45,10 +45,13 @@ d3.csv('assets/csv/ACS_vs_BRFSS_2014.csv', function(err, data) {
 function makeResponsive() {
     var svgArea = d3.select('body').select('svg')
 
-    if (!svgArea.empty()) svgArea.remove()
+    if (!svgArea.empty()) {
+        svgArea.remove()
+        circleGroup = xScale =  yScale = xAxis = yAxis = null // Invalidate dynamic contents
+    }
 
-    var svgWidth = window.innerWidth - 10
-    var svgHeight = window.innerHeight - 25
+    var svgWidth = window.innerWidth - 10  // Poorman's solution to get rid of scrollbar.
+    var svgHeight = window.innerHeight - 25 // Need better solution
 
     margin = {
         top: 50,
@@ -133,11 +136,14 @@ function makeResponsive() {
     }
 
     function drawDataPoints() {
+
+       let translater = d => `translate(${xScale(d[FACT]) }, ${yScale(d[RISK]) })`
        if (circleGroup == null) {
             circleGroup = chartGroup.selectAll()
                 .data(DATA)
                 .enter()
                 .append('g')
+                .attr('transform', translater)
 
             circleGroup.append('circle')
                 .attr('r', '10')
@@ -148,12 +154,12 @@ function makeResponsive() {
                 .classed('state-abbr', true)
                 .attr('x', -7)
                 .attr('y', 3)
+        } else { // Even though the initial animation is cool, it does not work well with resizing
+            circleGroup
+                .transition()
+                .duration(1000)
+                .attr('transform', translater)
         }
-
-       circleGroup
-            .transition()
-            .duration(1000)
-           .attr('transform', d => `translate(${xScale(d[FACT]) }, ${yScale(d[RISK]) })`)
 
          var tip = d3.tip()
             .attr('class', 'tooltip')
@@ -177,6 +183,7 @@ function makeResponsive() {
         addYLabel()
 
         // X Axis
+
         if (xAxis == null) {
             xScale = d3.scaleLinear()
                 .domain(d3.extent(DATA, d => d[FACT]))
