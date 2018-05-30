@@ -120,12 +120,7 @@ function makeResponsive() {
         }
     }
 
-    function ucFirst(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
     function drawDataPoints() {
-
        let translater = d => `translate(${xScale(d[FACT]) }, ${yScale(d[RISK]) })`
        if (circleGroup == null) {
             circleGroup = chartGroup.selectAll()
@@ -149,15 +144,15 @@ function makeResponsive() {
                 .duration(1000)
                 .attr('transform', translater)
         }
+        addTooltips(circleGroup)
+    }
 
+    function addTooltips(circleGroup) {
          var tip = d3.tip()
             .attr('class', 'tooltip')
             .style('opacity', 0.5)
-            .html( d => {
-                let fact_val = d[FACT]
-                let risk_val = d[RISK]
-                return `${d.state}<br>${ucFirst(FACT)}: ${fact_val}%<br>${ucFirst(RISK)}: ${risk_val}%`
-             } ).hide()
+            .html( getTipText )
+            .hide()
 
         circleGroup.call(tip)
 
@@ -166,13 +161,25 @@ function makeResponsive() {
             .on('mouseout', d => tip.hide())
     }
 
+
+    function ucFirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
+    function getTipText(d) {
+        let fact_val = d[FACT]
+        let risk_val = d[RISK]
+        fact_val = FACT == 'age' ? fact_val : FACT == 'income'? d3.format('$,')(fact_val) : d3.format('.1%')(fact_val/100)
+        risk_val = d3.format('.1%')(risk_val/100)
+        return `${d.state}<br>${ucFirst(FACT)}: ${fact_val}<br>${ucFirst(RISK)}: ${risk_val}`
+    }
+
     function redraw() {
         addTitle()
         addXLabel()
         addYLabel()
 
         // X Axis
-
         if (xAxis == null) {
             xScale = d3.scaleLinear()
                 .domain(d3.extent(DATA, d => d[FACT]))
